@@ -1,0 +1,34 @@
+yum update -y
+
+yum install -y telnet vim
+
+wget https://download.elastic.co/kibana/kibana/kibana-4.5.1-1.x86_64.rpm
+
+yum install -y kibana-4.5.1-1.x86_64.rpm
+
+chkconfig --add kibana
+
+chkconfig kibana on
+
+vim /opt/kibana/config/kibana.yml
+
+elasticsearch.url: "http://<elasticsearch-load-balancer-endpoint>.ap-southeast-1.elb.amazonaws.com:9200"
+
+/opt/kibana/bin/kibana plugin --install elastic/sense
+
+service kibana start
+
+yum install -y nginx
+
+yum install -y httpd-tools
+
+htpasswd -c /etc/nginx/.htpasswd wwf
+
+vim /etc/nginx/nginx.conf
+
+auth_basic "Private Property";
+auth_basic_user_file /etc/nginx/.htpasswd;
+
+proxy_pass http://localhost:5601/;
+
+service nginx start

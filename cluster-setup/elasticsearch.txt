@@ -1,0 +1,41 @@
+yum update -y
+
+yum install -y telnet vim
+
+cd /root
+
+https://download.elastic.co/elasticsearch/release/org/elasticsearch/distribution/rpm/elasticsearch/2.3.3/elasticsearch-2.3.3.rpm
+
+yum install -y elasticsearch-2.3.3.rpm
+
+chkconfig --add elasticsearch
+
+chkconfig elasticsearch on
+
+rm -f elasticsearch-2.3.3.rpm
+
+cd /usr/share/elasticsearch/
+
+./bin/plugin install mobz/elasticsearch-head
+
+./bin/plugin install AIsaac08/bigdesk
+
+./bin/plugin install cloud-aws
+
+./bin/plugin install lmenezes/elasticsearch-kopf
+
+cd /etc/elasticsearch
+
+vim elasticsearch.yml
+
+cluster.name: my-elasticsearch-cluster
+
+network.host: _eth0_
+
+# ----------------------------------- Cloud ------------------------------------
+
+cloud.aws.region: ap-southeast-1
+discovery.type: ec2
+discovery.ec2.tag.Escluster: "Escluster"
+http.cors.enabled: true
+http.cors.allow-origin: *

@@ -1,0 +1,13 @@
+yum update -y
+
+yum install -y telnet vim
+
+wget https://download.elastic.co/logstash/logstash/packages/centos/logstash-2.3.2-1.noarch.rpm
+
+yum install -y logstash-2.3.2-1.noarch.rpm
+
+chkconfig --add logstash
+
+chkconfig logstash on
+
+service logstash start
